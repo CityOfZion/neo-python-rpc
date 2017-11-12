@@ -13,10 +13,9 @@ neo-python-rpc
         :target: https://neo-python-rpc.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://pyup.io/repos/github/CityOfZion/neo-python-rpc/shield.svg
-     :target: https://pyup.io/repos/github/CityOfZion/neo-python-rpc/
-     :alt: Updates
-
+.. image:: https://coveralls.io/repos/github/CityOfZion/neo-python-rpc/badge.svg?branch=master
+        :target: https://coveralls.io/github/CityOfZion/neo-python-rpc?branch=master
+        :alt: Coverage Status
 
 A Python RPC Client for the NEO Blockchain
 
@@ -28,5 +27,5 @@ A Python RPC Client for the NEO Blockchain
 Features
 --------
 
-* TODO
+A lightweight RPC Client for the NEO Blockchain
 

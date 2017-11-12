@@ -10,8 +10,6 @@ from pip.download import PipSession
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
-    history = history_file.read()
 
 # parse_requirements() returns generator of pip.req.InstallRequirement objects
 install_reqs = parse_requirements('requirements_dev.txt', session=PipSession())
@@ -29,9 +27,9 @@ test_requirements = dev_reqs
 
 setup(
     name='neo-python-rpc',
-    version='0.1.2',
+    version='0.1.3',
     description="A Python RPC Client for the NEO Blockchain",
-    long_description=readme + '\n\n' + history,
+    long_description=readme,
     author="Thomas Saunders",
     author_email='tom@cityofzion.io',
     url='https://github.com/CityOfZion/neo-python-rpc',
