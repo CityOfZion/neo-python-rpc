@@ -16,7 +16,9 @@ install:
   - pip install coveralls
 
 # command to run tests, e.g. python setup.py test
-script: tox
+script:
+  - coverage run setup.py test
+  - flake8 neo
 
 
 after_success:
