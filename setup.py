@@ -27,7 +27,7 @@ test_requirements = dev_reqs
 
 setup(
     name='neo-python-rpc',
-    version='0.1.3',
+    version='0.1.5',
     description="A Python RPC Client for the NEO Blockchain",
     long_description=readme,
     author="Thomas Saunders",
