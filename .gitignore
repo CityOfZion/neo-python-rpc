@@ -1,0 +1,11 @@
+.idea
+
+__pycache__
+*.pyc
+.egginfo
+
+venv
+build
+dist
+htmlcov
+.tox
