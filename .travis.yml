@@ -11,7 +11,6 @@ python:
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install:
   - pip install -r requirements_dev.txt
-  - pip install -U tox-travis
   - pip install coveralls
 
 # command to run tests, e.g. python setup.py test
