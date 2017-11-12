@@ -1,0 +1,7 @@
+[run]
+source = neo
+
+[report]
+omit =
+  venv*
+  tests
