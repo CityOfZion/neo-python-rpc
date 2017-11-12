@@ -33,7 +33,7 @@ setup(
     author="Thomas Saunders",
     author_email='tom@cityofzion.io',
     url='https://github.com/CityOfZion/neo-python-rpc',
-    packages=find_packages(include=['neo']),
+    packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     include_package_data=True,
     install_requires=requirements,
     license="MIT license",
