@@ -5,6 +5,7 @@
 
 from setuptools import setup, find_packages
 from pip.req import parse_requirements
+from pip.download import PipSession
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -13,7 +14,7 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 # parse_requirements() returns generator of pip.req.InstallRequirement objects
-install_reqs = parse_requirements('requirements_dev.txt')
+install_reqs = parse_requirements('requirements_dev.txt', session=PipSession())
 
 dev_reqs = [str(ir.req) for ir in install_reqs]
 
