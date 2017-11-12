@@ -1,21 +1,35 @@
-# neo-python-rpc
+<p align="center">
+  <img
+    src="http://res.cloudinary.com/vidsy/image/upload/v1503160820/CoZ_Icon_DARKBLUE_200x178px_oq0gxm.png"
+    width="125px;">
+</p>
 
-A Python RPC Client for the NEO Blockchain
+<h1 align="center">neo-python-rpc</h1>
+
+<p align="center">A lightweight Python RPC Client for the NEO Blockchain</p>
+<div align="center">
+
+<a href="https://pypi.python.org/pypi/neo-python-rpc" rel="nofollow"><img src="https://img.shields.io/pypi/v/neo-python-rpc.svg">
+</a>
+<a href="https://travis-ci.org/CityOfZion/neo-python-rpc" rel="nofollow"><img src="https://img.shields.io/travis/CityOfZion/neo-python-rpc.svg">
+</a>
+<a href="https://neo-python-rpc.readthedocs.io/en/latest/?badge=latest" rel="nofollow"><img src="https://readthedocs.org/projects/neo-python-rpc/badge/?version=latest"></a>
+<a href="https://coveralls.io/github/CityOfZion/neo-python-rpc?branch=master" rel="nofollow"><img src="https://coveralls.io/repos/github/CityOfZion/neo-python-rpc/badge.svg?branch=master"></a>
+</div>
+
+<ul>
+<li>Free software: MIT license</li>
+<li>Documentation: <a href="https://neo-python-rpc.readthedocs.io" rel="nofollow">https://neo-python-rpc.readthedocs.io</a>.</li>
+</ul>
 
 
-## install
+## Install
 
 `pip install neo-python-rpc`
 
-## docs
-
-All information about installation, usage, contributing, etc can be viewed here:
-
-https://neo-python-rpc.readthedocs.io/en/latest/readme.html 
 
 
-
-### sample usage
+### Basic Usage
 
 - Get Height of blockchain
     ```
