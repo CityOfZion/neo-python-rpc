@@ -2,6 +2,7 @@ from unittest import TestCase
 from neo.Network.RPC.Client import RPCClient, RPCEnpoint
 from neo.Settings import SettingsHolder
 import binascii
+import struct
 
 
 class RPCClientTestCase(TestCase):
