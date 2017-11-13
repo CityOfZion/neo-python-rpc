@@ -1,6 +1,6 @@
 from unittest import TestCase
 from neorpc.Settings import SettingsHolder
-from neorpc.Client import RPCClient,RPCEnpoint
+from neorpc.Client import RPCClient, RPCEndpoint
 import binascii
 
 
@@ -18,9 +18,9 @@ class RPCClientTestCase(TestCase):
 
         self.assertGreater(len(client.endpoints), 0)
 
-        self.assertIsInstance(client.default_enpoint, RPCEnpoint)
+        self.assertIsInstance(client.default_endpoint, RPCEndpoint)
 
-        self.assertEqual(client.default_enpoint.height, None)
+        self.assertEqual(client.default_endpoint.height, None)
 
     def test_settings(self):
         settings = SettingsHolder()
@@ -38,11 +38,11 @@ class RPCClientTestCase(TestCase):
 
         self.assertGreater(len(client.endpoints), 0)
 
-        self.assertIsInstance(client.default_enpoint, RPCEnpoint)
+        self.assertIsInstance(client.default_endpoint, RPCEnpoint)
 
-        self.assertIsNotNone(client.default_enpoint.height)
+        self.assertIsNotNone(client.default_endpoint.height)
 
-        self.assertEqual(client.default_enpoint.status, 200)
+        self.assertEqual(client.default_endpoint.status, 200)
 
     def test_height(self):
         client = RPCClient()
