@@ -1,4 +1,4 @@
-from neo.Settings import settings as rpc_settings
+from neorpc.Settings import settings as rpc_settings
 import requests
 import binascii
 
@@ -79,7 +79,7 @@ class RPCClient():
             endpoint: (RPCEndpoint, optional) endpoint to specify to use
 
         Returns:
-            block: a json object or the ``neo.Core.Block.Block`` object
+            block: a json object or the ``neorpc.Core.Block.Block`` object
         """
         return self._call_endpoint(GET_BLOCK, params=[height_or_hash, 1], id=id, endpoint=endpoint)
 

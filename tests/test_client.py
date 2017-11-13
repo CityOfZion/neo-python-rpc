@@ -1,8 +1,7 @@
 from unittest import TestCase
-from neo.Network.RPC.Client import RPCClient, RPCEnpoint
-from neo.Settings import SettingsHolder
+from neorpc.Settings import SettingsHolder
+from neorpc.Client import RPCClient,RPCEnpoint
 import binascii
-import struct
 
 
 class RPCClientTestCase(TestCase):
@@ -25,7 +24,7 @@ class RPCClientTestCase(TestCase):
 
     def test_settings(self):
         settings = SettingsHolder()
-        settings.setup('protocol.testnet.json')
+        settings.setup_mainnet()
 
         client = RPCClient(config=settings)
 

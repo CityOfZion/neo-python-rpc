@@ -15,7 +15,7 @@ install:
 # command to run tests, e.g. python setup.py test
 script:
   - coverage run setup.py test
-  - pycodestyle neo
+  - pycodestyle neorpc
 
 
 after_success:
