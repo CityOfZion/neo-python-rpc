@@ -2,7 +2,7 @@
 
 __pycache__
 *.pyc
-neo_python_rpc.egg-info
+neorpc_python_rpc.egg-info
 .eggs
 
 venv
