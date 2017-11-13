@@ -307,7 +307,7 @@ class RPCClient():
         return None
 
     def _build_addr(self):
-        self._addr_list = [RPCEnpoint(self, addr) for addr in self._settings.RPC_LIST]
+        self._addr_list = [RPCEndpoint(self, addr) for addr in self._settings.RPC_LIST]
 
     def _build_payload(self, method, params, id):
 
