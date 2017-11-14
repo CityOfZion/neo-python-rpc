@@ -15,7 +15,7 @@ class RPCClient():
         return self._addr_list
 
     @property
-    def default_enpoint(self):
+    def default_endpoint(self):
         self._addr_list.sort()
         return self._addr_list[0]
 
@@ -294,7 +294,7 @@ class RPCClient():
 
     def _call_endpoint(self, method, params=None, id=None, endpoint=None):
         payload = self._build_payload(method, params, id)
-        endpoint = self.default_enpoint if endpoint is None else endpoint
+        endpoint = self.default_endpoint if endpoint is None else endpoint
         try:
             response = requests.post(endpoint.addr, json=payload, timeout=TIMEOUT)
             response.raise_for_status()
@@ -307,7 +307,7 @@ class RPCClient():
         return None
 
     def _build_addr(self):
-        self._addr_list = [RPCEnpoint(self, addr) for addr in self._settings.RPC_LIST]
+        self._addr_list = [RPCEndpoint(self, addr) for addr in self._settings.RPC_LIST]
 
     def _build_payload(self, method, params, id):
 
@@ -354,7 +354,7 @@ VALIDATE_ADDR = 'validateaddress'
 TIMEOUT = 10
 
 
-class RPCEnpoint():
+class RPCEndpoint():
     addr = None
     height = None
     client = None
@@ -368,13 +368,13 @@ class RPCEnpoint():
     def setup(self):
 
         response = requests.post(self.addr, json={'jsonrpc': '2.0', 'method': GET_BLOCK_COUNT, 'params': [], 'id': 1})
-        self.update_enpoint_details(response)
+        self.update_endpoint_details(response)
 
         if response.status_code == 200:
             json = response.json()
             self.height = int(json['result'])
 
-    def update_enpoint_details(self, response):
+    def update_endpoint_details(self, response):
 
         self.status = response.status_code
         self.elapsed = response.elapsed.microseconds
