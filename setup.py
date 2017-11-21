@@ -27,13 +27,13 @@ test_requirements = dev_reqs
 
 setup(
     name='neo-python-rpc',
-    version='0.1.7',
+    version='0.1.8',
     description="A Python RPC Client for the NEO Blockchain",
     long_description=readme,
     author="Thomas Saunders",
     author_email='tom@cityofzion.io',
     url='https://github.com/CityOfZion/neo-python-rpc',
-    packages=find_packages(exclude=['docs', 'tests','venv','dist','build']),
+    packages=find_packages(include=['neorpc']),
     include_package_data=True,
     install_requires=requirements,
     license="MIT license",

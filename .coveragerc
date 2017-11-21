@@ -1,5 +1,5 @@
 [run]
-source = neo
+source = neorpc
 
 [report]
 omit =
