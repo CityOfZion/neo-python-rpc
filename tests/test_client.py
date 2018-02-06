@@ -179,7 +179,7 @@ class RPCClientTestCase(TestCase):
 
         intval = int.from_bytes(storage, 'little')
 
-        self.assertEqual(intval, 196900000000000)
+        self.assertEqual(intval, 227000000000000)
 
     def test_tx_out(self):
 
@@ -258,7 +258,7 @@ class RPCClientTestCase(TestCase):
 
         val = int.from_bytes(binascii.unhexlify(stack_item['value'].encode('utf-8')), 'little')
 
-        self.assertEqual(val, 196900000000000)
+        self.assertEqual(val, 227000000000000)
 
     def test_send_raw_tx(self):
 
