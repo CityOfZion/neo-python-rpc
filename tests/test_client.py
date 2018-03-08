@@ -298,13 +298,10 @@ class RPCClientTestCase(TestCase):
 #        self.assertIn('connected', result)
 #        self.assertIn('unconnected', result)
 
-
-# Not all endpoints currently implement this method
-#
-#    def test_get_version(self):
-#
-#        client = RPCClient()
-#
-#        version = client.get_version()
-#
-#        print("versin: %s " % version)
+    def test_get_version(self):
+        client = RPCClient()
+        version = client.get_version()
+        self.assertIn("port", version)
+        self.assertIn("nonce", version)
+        self.assertIn("useragent", version)
+    #    print("versin: %s " % version)

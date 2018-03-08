@@ -266,17 +266,18 @@ class RPCClient():
         """
         return self._call_endpoint(GET_PEERS, id=id, endpoint=endpoint)
 
-# Not all endpoints currently implement this method
-#    def get_version(self, id=None, endpoint=None):
-#        """
-#        Get the current version of the endpoint
-#        Args:
-#            id: (int, optional) id to use for response tracking
-#            endpoint: (RPCEndpoint, optional) endpoint to specify to use
-#        Returns:
-#            json object of the result or the error encountered in the RPC call
-#        """
-#        return self._call_endpoint(GET_VERSION, id=id, endpoint=endpoint)
+    def get_version(self, id=None, endpoint=None):
+        """
+        Get the current version of the endpoint.
+        Note: Not all endpoints currently implement this method
+
+        Args:
+            id: (int, optional) id to use for response tracking
+            endpoint: (RPCEndpoint, optional) endpoint to specify to use
+        Returns:
+            json object of the result or the error encountered in the RPC call
+        """
+        return self._call_endpoint(GET_VERSION, id=id, endpoint=endpoint)
 
     def __init__(self, config=None, setup=False):
 
