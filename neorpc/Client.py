@@ -2,8 +2,10 @@ from neorpc.Settings import settings as rpc_settings
 import requests
 import binascii
 
+
 class NEORPCException(Exception):
     pass
+
 
 class RPCClient():
 
