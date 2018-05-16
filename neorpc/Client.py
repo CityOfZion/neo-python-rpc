@@ -389,7 +389,11 @@ class RPCEndpoint():
             return 1
 
         if self.height == other.height:
+            if self.elapsed == other.elapsed:
+                return 0
+
             if other.elapsed > 0 and self.elapsed > 0:
+
                 if self.elapsed > other.elapsed:
                     return 1
                 else:
@@ -400,8 +404,6 @@ class RPCEndpoint():
                 return 1
             else:
                 return -1
-
-        return 0
 
     def __eq__(self, other):
         return self.addr == other.addr
@@ -419,4 +421,4 @@ class RPCEndpoint():
         return self._compare(other) >= 0
 
     def __str__(self):
-        return "[%s] %s %s %s  " % (self.addr, self.status, self.height, self.elapsed)
+        return "[%s] %s %s %s" % (self.addr, self.status, self.height, self.elapsed)
