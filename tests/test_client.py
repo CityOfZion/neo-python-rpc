@@ -1,7 +1,9 @@
 from unittest import TestCase
 from neorpc.Settings import SettingsHolder
-from neorpc.Client import RPCClient, RPCEnpoint
+from neorpc.Client import RPCClient, RPCEndpoint, NEORPCException
 import binascii
+import responses
+
 
 
 class RPCClientTestCase(TestCase):
@@ -18,17 +20,25 @@ class RPCClientTestCase(TestCase):
 
         self.assertGreater(len(client.endpoints), 0)
 
-        self.assertIsInstance(client.default_enpoint, RPCEnpoint)
+        self.assertIsInstance(client.default_endpoint, RPCEndpoint)
 
-        self.assertEqual(client.default_enpoint.height, None)
+        self.assertEqual(client.default_endpoint.height, None)
 
     def test_settings(self):
         settings = SettingsHolder()
+
         settings.setup_mainnet()
-
         client = RPCClient(config=settings)
-
         self.assertIsNotNone(client.endpoints)
+
+        settings.setup_testnet()
+        client = RPCClient(config=settings)
+        self.assertIsNotNone(client.endpoints)
+
+        settings.setup_privnet()
+        client = RPCClient(config=settings)
+        self.assertIsNotNone(client.endpoints)
+
 
     def test_client_setup(self):
 
@@ -38,11 +48,33 @@ class RPCClientTestCase(TestCase):
 
         self.assertGreater(len(client.endpoints), 0)
 
-        self.assertIsInstance(client.default_enpoint, RPCEnpoint)
+        self.assertIsInstance(client.default_endpoint, RPCEndpoint)
 
-        self.assertIsNotNone(client.default_enpoint.height)
+        self.assertIsNotNone(client.default_endpoint.height)
 
-        self.assertEqual(client.default_enpoint.status, 200)
+        self.assertEqual(client.default_endpoint.status, 200)
+
+    def test_call_endpoint_exception(self):
+        settings = SettingsHolder()
+
+        settings.setup_privnet()
+        client = RPCClient(config=settings)
+
+        # Assumes no privnet is running (which always holds true on Travis-CI)
+        with self.assertRaises(NEORPCException) as context:
+            client.get_height()
+        self.assertTrue("Could not call method" in str(context.exception))
+
+    @responses.activate
+    def test_call_endpoint_status_moved(self):#, mocked_post):
+        client = RPCClient()
+
+        responses.add(responses.POST, 'http://test5.cityofzion.io:8880/',
+                      json={'Found': 'Moved'}, status=302)
+
+        response = client.get_height()
+        self.assertTrue('Found' in response)
+
 
     def test_height(self):
         client = RPCClient()
@@ -181,6 +213,12 @@ class RPCClientTestCase(TestCase):
 
         self.assertEqual(intval, 227000000000000)
 
+        # now also test for failure
+        key = 'invalidkey'
+        with self.assertRaises(NEORPCException) as context:
+            storage = client.get_storage(contract_hash, key)
+        self.assertTrue("could not decode result" in str(context.exception))
+
     def test_tx_out(self):
 
         client = RPCClient()
@@ -304,4 +342,40 @@ class RPCClientTestCase(TestCase):
         self.assertIn("port", version)
         self.assertIn("nonce", version)
         self.assertIn("useragent", version)
-    #    print("versin: %s " % version)
+
+
+class RPCEndPointTestCase(TestCase):
+
+    def setUp(self):
+        self.ep1 = RPCEndpoint(client=None, address='addr1')
+        self.ep2 = RPCEndpoint(client=None, address='addr1')
+        self.ep1.status = 200
+        self.ep2.status = 200
+        self.ep1.elapsed = 1
+        self.ep2.elapsed = 1
+        self.ep1.height = 1
+        self.ep2.height = 1
+
+    def test_eq(self):
+        self.assertEquals(self.ep1, self.ep2)
+
+    def test_gt_and_ge(self):
+        self.ep2.height = 2
+        self.assertGreater(self.ep1, self.ep2)
+        self.ep2.height = 1
+        self.assertGreaterEqual(self.ep1, self.ep2)
+
+        self.ep1.status = 404
+        self.assertGreater(self.ep2, self.ep1)
+
+    def test_lt_and_le(self):
+        self.ep2.height = 2
+        self.assertLess(self.ep2, self.ep1)
+        self.ep2.height = 1
+        self.assertLessEqual(self.ep2, self.ep1)
+
+
+    def test_str(self):
+        self.assertEquals("[addr1] 200 1 1", str(self.ep1))
+
+
