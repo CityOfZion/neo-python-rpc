@@ -45,7 +45,7 @@ class SettingsHolder:
         """ Load settings from the privnet JSON config file """
         self.setup(
             [
-                "127.0.0.1:20332"
+                "http://127.0.0.1:30333"
             ]
         )
 
