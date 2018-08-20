@@ -370,7 +370,7 @@ class RPCEndpoint():
 
     def setup(self):
 
-        response = requests.post(self.addr, json={'jsonrpc': '2.0', 'method': GET_BLOCK_COUNT, 'params': [], 'id': 1})
+        response = requests.post(self.addr, json={'jsonrpc': '2.0', 'method': GET_BLOCK_COUNT, 'params': [], 'id': 1}, timeout=TIMEOUT)
         self.update_endpoint_details(response)
 
         if response.status_code == 200:
