@@ -369,14 +369,16 @@ class RPCEndpoint():
         self.addr = address
 
     def setup(self):
+        try:
+            response = requests.post(self.addr, json={'jsonrpc': '2.0', 'method': GET_BLOCK_COUNT, 'params': [], 'id': 1}, timeout=TIMEOUT)
+            self.update_endpoint_details(response)
 
-        response = requests.post(self.addr, json={'jsonrpc': '2.0', 'method': GET_BLOCK_COUNT, 'params': [], 'id': 1})
-        self.update_endpoint_details(response)
-
-        if response.status_code == 200:
-            json = response.json()
-            self.height = int(json['result'])
-
+            if response.status_code == 200:
+                json = response.json()
+                self.height = int(json['result'])
+        except Exception as e:
+            raise NEORPCException("Could not setup %s : %s " % (self.addr, e))
+               
     def update_endpoint_details(self, response):
 
         self.status = response.status_code
