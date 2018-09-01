@@ -69,7 +69,7 @@ class RPCClientTestCase(TestCase):
     def test_call_endpoint_status_moved(self):#, mocked_post):
         client = RPCClient()
 
-        responses.add(responses.POST, 'http://test5.cityofzion.io:8880/',
+        responses.add(responses.POST, 'https://test5.cityofzion.io:443/',
                       json={'Found': 'Moved'}, status=302)
 
         response = client.get_height()
@@ -357,7 +357,7 @@ class RPCEndPointTestCase(TestCase):
         self.ep2.height = 1
 
     def test_eq(self):
-        self.assertEquals(self.ep1, self.ep2)
+        self.assertEqual(self.ep1, self.ep2)
 
     def test_gt_and_ge(self):
         self.ep2.height = 2

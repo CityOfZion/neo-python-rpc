@@ -22,22 +22,22 @@ class SettingsHolder:
         """ Load settings from the mainnet JSON config file """
         self.setup(
             [
-                "http://seed1.cityofzion.io:8080",
-                "http://seed2.cityofzion.io:8080",
-                "http://seed3.cityofzion.io:8080",
-                "http://seed4.cityofzion.io:8080",
-                "http://seed5.cityofzion.io:8080"
+                "https://seed1.cityofzion.io:443",
+                "https://seed2.cityofzion.io:443",
+                "https://seed3.cityofzion.io:443",
+                "https://seed4.cityofzion.io:443",
+                "https://seed5.cityofzion.io:443"
             ]
         )
 
     def setup_testnet(self):
         self.setup(
             [
-                "http://test1.cityofzion.io:8880",
-                "http://test2.cityofzion.io:8880",
-                "http://test3.cityofzion.io:8880",
-                "http://test4.cityofzion.io:8880",
-                "http://test5.cityofzion.io:8880"
+                "https://test1.cityofzion.io:443",
+                "https://test2.cityofzion.io:443",
+                "https://test3.cityofzion.io:443",
+                "https://test4.cityofzion.io:443",
+                "https://test5.cityofzion.io:443"
             ]
         )
 
