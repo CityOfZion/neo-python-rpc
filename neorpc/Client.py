@@ -63,6 +63,19 @@ class RPCClient():
         """
         return self._call_endpoint(GET_ASSET_STATE, params=[asset_hash], id=id, endpoint=endpoint)
 
+    def get_balance(self, asset_hash, id=None, endpoint=None):
+        """
+        Get balance by asset hash
+        Args:
+            asset_hash: (str) asset to lookup, example would be 'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b'
+            id: (int, optional) id to use for response tracking
+            endpoint: (RPCEndpoint, optional) endpoint to specify to use
+
+        Returns:
+            json object of the result or the error encountered in the RPC call
+        """
+        return self._call_endpoint(GET_BALANCE, params=[asset_hash], id=id, endpoint=endpoint)
+
     def get_best_blockhash(self, id=None, endpoint=None):
         """
         Get the hash of the highest block
@@ -282,6 +295,17 @@ class RPCClient():
         """
         return self._call_endpoint(GET_VERSION, id=id, endpoint=endpoint)
 
+    def get_new_address(self, id=None, endpoint=None):
+        """
+        Create new address
+        Args:
+            id: (int, optional) id to use for response tracking
+            endpoint: (RPCEndpoint, optional) endpoint to specify to use
+        Returns:
+            json object of the result or the error encountered in the RPC call
+        """
+        return self._call_endpoint(GET_NEW_ADDRESS, params=[], id=id, endpoint=endpoint)
+
     def __init__(self, config=None, setup=False):
 
         if config:
@@ -340,6 +364,10 @@ GET_STORAGE = 'getstorage'
 GET_TX_OUT = 'gettxout'
 GET_PEERS = 'getpeers'
 GET_VERSION = 'getversion'
+
+# wallet method
+GET_BALANCE = 'getbalance'
+GET_NEW_ADDRESS = 'getnewaddress'
 
 # invocation related methods
 INVOKE = 'invoke'
