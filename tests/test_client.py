@@ -309,7 +309,9 @@ class RPCClientTestCase(TestCase):
         # so we are testing if we get back a false
         result = client.send_raw_tx(raw_tx)
 
-        self.assertEqual(result, False)
+        self.assertIn('error', result)
+        self.assertIn('Block or transaction already exists', result['error']['message'])
+
 
     def test_validate_addr(self):
 
