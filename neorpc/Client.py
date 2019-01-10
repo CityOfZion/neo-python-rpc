@@ -378,7 +378,7 @@ class RPCEndpoint():
                 self.height = int(json['result'])
         except Exception as e:
             raise NEORPCException("Could not setup %s : %s " % (self.addr, e))
-               
+
     def update_endpoint_details(self, response):
 
         self.status = response.status_code
