@@ -401,7 +401,6 @@ class RPCEndpoint():
                 else:
                     return -1
         else:
-
             if self.height < other.height:
                 return 1
             else:
