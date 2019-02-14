@@ -5,7 +5,6 @@ import binascii
 import responses
 
 
-
 class RPCClientTestCase(TestCase):
 
     sample_addr = 'AXjaFSP23Jkbe6Pk9pPGT6NBDs1HVdqaXK'
@@ -39,7 +38,6 @@ class RPCClientTestCase(TestCase):
         client = RPCClient(config=settings)
         self.assertIsNotNone(client.endpoints)
 
-
     def test_client_setup(self):
 
         client = RPCClient(setup=True)
@@ -66,7 +64,7 @@ class RPCClientTestCase(TestCase):
         self.assertTrue("Could not call method" in str(context.exception))
 
     @responses.activate
-    def test_call_endpoint_status_moved(self):#, mocked_post):
+    def test_call_endpoint_status_moved(self):  # , mocked_post):
         client = RPCClient()
 
         responses.add(responses.POST, 'https://test5.cityofzion.io:443/',
@@ -74,7 +72,6 @@ class RPCClientTestCase(TestCase):
 
         response = client.get_height()
         self.assertTrue('Found' in response)
-
 
     def test_height(self):
         client = RPCClient()
@@ -133,7 +130,7 @@ class RPCClientTestCase(TestCase):
 
         self.assertEqual(blockhash, '1e67372c158a4cfbb17b9ad3aaae77001a4247a00318e354c62e53b56af4006f')
 
-        blockjson2 = client.get_block(blockhash)
+#        blockjson2 = client.get_block(blockhash)
 
 #        self.assertEqual(blockjson1, blockjson2)
 
@@ -148,6 +145,18 @@ class RPCClientTestCase(TestCase):
         hash = client.get_block_hash(height)
 
         self.assertEqual(hash[2:], '1e67372c158a4cfbb17b9ad3aaae77001a4247a00318e354c62e53b56af4006f')
+
+    def test_getblockheader(self):
+
+        client = RPCClient()
+
+        hash = '1e67372c158a4cfbb17b9ad3aaae77001a4247a00318e354c62e53b56af4006f'
+
+        header = client.get_block_header(hash)
+
+        self.assertEqual(header['hash'][2:], '1e67372c158a4cfbb17b9ad3aaae77001a4247a00318e354c62e53b56af4006f')
+        self.assertEqual(header['index'], 12344)
+        self.assertNotIn('tx', header)
 
     def test_sysfee(self):
 
@@ -312,7 +321,6 @@ class RPCClientTestCase(TestCase):
         self.assertIn('error', result)
         self.assertIn('Block or transaction already exists', result['error']['message'])
 
-
     def test_validate_addr(self):
 
         client = RPCClient()
@@ -337,6 +345,16 @@ class RPCClientTestCase(TestCase):
         self.assertIsNotNone(result)
 #        self.assertIn('connected', result)
 #        self.assertIn('unconnected', result)
+
+    def test_get_validators(self):
+
+        client = RPCClient()
+
+        result = client.get_validators()
+
+        self.assertIn('publickey', result[0])
+        self.assertIn('votes', result[0])
+        self.assertIn('active', result[0])
 
     def test_get_version(self):
         client = RPCClient()
@@ -376,8 +394,5 @@ class RPCEndPointTestCase(TestCase):
         self.ep2.height = 1
         self.assertLessEqual(self.ep2, self.ep1)
 
-
     def test_str(self):
-        self.assertEquals("[addr1] 200 1 1", str(self.ep1))
-
-
+        self.assertEqual("[addr1] 200 1 1", str(self.ep1))

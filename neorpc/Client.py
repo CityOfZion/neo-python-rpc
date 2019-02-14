@@ -113,6 +113,19 @@ class RPCClient():
         """
         return self._call_endpoint(GET_BLOCK_HASH, params=[height], id=id, endpoint=endpoint)
 
+    def get_block_header(self, block_hash, id=None, endpoint=None):
+        """
+        Get the corresponding block header information according to the specified script hash.
+        Args:
+            block_hash: (str) the block scripthash (e.g. 'a5508c9b6ed0fc09a531a62bc0b3efcb6b8a9250abaf72ab8e9591294c1f6957')
+            id: (int, optional) id to use for response tracking
+            endpoint: (RPCEndpoint, optional) endpoint to specify to use
+
+        Returns:
+            json object of the result or the error encountered in the RPC call
+        """
+        return self._call_endpoint(GET_BLOCK_HEADER, params=[block_hash, 1], id=id, endpoint=endpoint)
+
     def get_block_sysfee(self, height, id=None, endpoint=None):
         """
         Get the system fee of a block by height.  This is used in calculating gas claims
@@ -135,7 +148,7 @@ class RPCClient():
         Returns:
             json object of the result or the error encountered in the RPC call
         """
-        return self._call_endpoint(GET_CONNECTION_COUNT, params=[], id=id, endpoint=endpoint)
+        return self._call_endpoint(GET_CONNECTION_COUNT, id=id, endpoint=endpoint)
 
     def get_contract_state(self, contract_hash, id=None, endpoint=None):
         """
@@ -158,7 +171,7 @@ class RPCClient():
         Returns:
             json object of the result or the error encountered in the RPC call
         """
-        return self._call_endpoint(GET_RAW_MEMPOOL, params=[], id=id, endpoint=endpoint)
+        return self._call_endpoint(GET_RAW_MEMPOOL, id=id, endpoint=endpoint)
 
     def get_transaction(self, tx_hash, id=None, endpoint=None):
         """
@@ -282,6 +295,18 @@ class RPCClient():
         """
         return self._call_endpoint(GET_PEERS, id=id, endpoint=endpoint)
 
+    def get_validators(self, id=None, endpoint=None):
+        """
+        Returns the current NEO consensus nodes information and voting status.
+        Args:
+            id: (int, optional) id to use for response tracking
+            endpoint: (RPCEndpoint, optional) endpoint to specify to use
+
+        Returns:
+            json object of the result or the error encountered in the RPC call
+        """
+        return self._call_endpoint(GET_VALIDATORS, id=id, endpoint=endpoint)
+
     def get_version(self, id=None, endpoint=None):
         """
         Get the current version of the endpoint.
@@ -304,7 +329,100 @@ class RPCClient():
         Returns:
             json object of the result or the error encountered in the RPC call
         """
-        return self._call_endpoint(GET_NEW_ADDRESS, params=[], id=id, endpoint=endpoint)
+        return self._call_endpoint(GET_NEW_ADDRESS, id=id, endpoint=endpoint)
+
+    def get_wallet_height(self, id=None, endpoint=None):
+        """
+        Get the current wallet index height.
+        Args:
+            id: (int, optional) id to use for response tracking
+            endpoint: (RPCEndpoint, optional) endpoint to specify to use
+        Returns:
+            json object of the result or the error encountered in the RPC call
+        """
+        return self._call_endpoint(GET_WALLET_HEIGHT, id=id, endpoint=endpoint)
+
+    def list_address(self, id=None, endpoint=None):
+        """
+        Lists all the addresses in the current wallet.
+        Args:
+            id: (int, optional) id to use for response tracking
+            endpoint: (RPCEndpoint, optional) endpoint to specify to use
+        Returns:
+            json object of the result or the error encountered in the RPC call
+        """
+        return self._call_endpoint(LIST_ADDRESS, id=id, endpoint=endpoint)
+
+    def send_from(self, asset_id, addr_from, to_addr, value, fee=None, change_addr=None, id=None, endpoint=None):
+        """
+        Transfer from the specified address to the destination address.
+        Args:
+            asset_id: (str) asset identifier (for NEO: 'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b', for GAS: '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7')
+            addr_from: (str) transfering address
+            to_addr: (str) destination address
+            value: (int/decimal) transfer amount
+            fee: (decimal, optional) Paying the handling fee helps elevate the priority of the network to process the transfer. It defaults to 0, and can be set to a minimum of 0.00000001. The low priority threshold is 0.001.
+            change_addr: (str, optional) Change address, default is the first standard address in the wallet.
+            id: (int, optional) id to use for response tracking
+            endpoint: (RPCEndpoint, optional) endpoint to specify to use
+        Returns:
+            json object of the result or the error encountered in the RPC call
+        """
+        params = [asset_id, addr_from, to_addr, value]
+        if fee:
+            params.append(fee)
+        if fee and change_addr:
+            params.append(change_addr)
+        elif not fee and change_addr:
+            params.append(0)
+            params.append(change_addr)
+        return self._call_endpoint(SEND_FROM, params=params, id=id, endpoint=endpoint)
+
+    def send_to_address(self, asset_id, to_addr, value, fee=None, change_addr=None, id=None, endpoint=None):
+        """
+        Args:
+            asset_id: (str) asset identifier (for NEO: 'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b', for GAS: '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7')
+            to_addr: (str) destination address
+            value: (int/decimal) transfer amount
+            fee: (decimal, optional) Paying the handling fee helps elevate the priority of the network to process the transfer. It defaults to 0, and can be set to a minimum of 0.00000001. The low priority threshold is 0.001.
+            change_addr: (str, optional) Change address, default is the first standard address in the wallet.
+            id: (int, optional) id to use for response tracking
+            endpoint: (RPCEndpoint, optional) endpoint to specify to use
+        Returns:
+            json object of the result or the error encountered in the RPC call
+        """
+        params = [asset_id, to_addr, value]
+        if fee:
+            params.append(fee)
+        if fee and change_addr:
+            params.append(change_addr)
+        elif not fee and change_addr:
+            params.append(0)
+            params.append(change_addr)
+        return self._call_endpoint(SEND_TO_ADDRESS, params=params, id=id, endpoint=endpoint)
+
+    def send_many(self, outputs_array, fee=None, change_addr=None, id=None, endpoint=None):
+        """
+        Args:
+            outputs_array: (dict) array, the data structure of each element in the array is as follows:
+                {"asset": <asset>,"value": <value>,"address": <address>}
+                asset: (str) asset identifier (for NEO: 'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b', for GAS: '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7')
+                value: (int/decimal) transfer amount
+                address: (str) destination address
+            fee: (decimal, optional) Paying the handling fee helps elevate the priority of the network to process the transfer. It defaults to 0, and can be set to a minimum of 0.00000001. The low priority threshold is 0.001.
+            change_addr: (str, optional) Change address, default is the first standard address in the wallet.
+            id: (int, optional) id to use for response tracking
+            endpoint: (RPCEndpoint, optional) endpoint to specify to use
+        """
+        params = [outputs_array]
+        if fee:
+            params.append(fee)
+        if fee and change_addr:
+            params.append(change_addr)
+        elif not fee and change_addr:
+            params.append(0)
+            params.append(change_addr)
+        return self._call_endpoint(SEND_MANY, params=params, id=id, endpoint=endpoint)
 
     def __init__(self, config=None, setup=False):
 
@@ -355,19 +473,26 @@ GET_BEST_BLOCK_HASH = 'getbestblockhash'
 GET_BLOCK = 'getblock'
 GET_BLOCK_COUNT = 'getblockcount'
 GET_BLOCK_HASH = 'getblockhash'
+GET_BLOCK_HEADER = 'getblockheader'
 GET_BLOCK_SYS_FEE = 'getblocksysfee'
 GET_CONNECTION_COUNT = 'getconnectioncount'
 GET_CONTRACT_STATE = 'getcontractstate'
+GET_PEERS = 'getpeers'
 GET_RAW_MEMPOOL = 'getrawmempool'
 GET_RAW_TRANSACTION = 'getrawtransaction'
 GET_STORAGE = 'getstorage'
 GET_TX_OUT = 'gettxout'
-GET_PEERS = 'getpeers'
+GET_VALIDATORS = 'getvalidators'
 GET_VERSION = 'getversion'
 
 # wallet method
 GET_BALANCE = 'getbalance'
 GET_NEW_ADDRESS = 'getnewaddress'
+GET_WALLET_HEIGHT = 'getwalletheight'
+LIST_ADDRESS = 'listaddress'
+SEND_FROM = 'sendfrom'
+SEND_TO_ADDRESS = 'sendtoaddress'
+SEND_MANY = 'sendmany'
 
 # invocation related methods
 INVOKE = 'invoke'
